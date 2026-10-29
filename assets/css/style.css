@@ -1178,11 +1178,12 @@ img {
     padding: 8px 30px 0;
     box-sizing: border-box;
     border-right: 1px solid var(--primary);
+    border-left: 1px solid var(--primary);
 }
 
-.stat-item:last-child {
+/* .stat-item:last-child {
     border-right: none;
-}
+} */
 
 .stat-icon {
     height: 65px;
@@ -1222,7 +1223,7 @@ img {
     height: 36px;
     border: none;
     border-radius: 50%;
-    background: var(--primary);
+    background: var(--red);
     color: #fff;
     cursor: pointer;
 }
