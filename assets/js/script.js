@@ -130,6 +130,125 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+
+// Homepage - Company stats
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const carousel = document.querySelector(".company-stats-carousel");
+    const viewport = document.querySelector(".company-stats-viewport");
+    const track = document.querySelector(".company-stats");
+    const prevBtn = document.querySelector(".stats-prev");
+    const nextBtn = document.querySelector(".stats-next");
+
+    if (!carousel || !viewport || !track || !prevBtn || !nextBtn) return;
+
+    const cards = Array.from(track.querySelectorAll(".stat-item"));
+    if (cards.length < 2) return;
+
+    let currentIndex = 0;
+    let autoScroll;
+    let paused = false;
+
+    function getVisibleCount() {
+        if (window.innerWidth <= 575) return 1;
+        if (window.innerWidth <= 991) return 3;
+        return 5;
+    }
+
+    function getMaxIndex() {
+        return Math.max(0, cards.length - getVisibleCount());
+    }
+
+    function updateCarousel() {
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const maxIndex = getMaxIndex();
+
+        // Wrap to the first position after the last slide.
+        if (currentIndex > maxIndex) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = maxIndex;
+
+        track.style.transform =
+            `translateX(-${currentIndex * cardWidth}px)`;
+    }
+
+    function nextSlide() {
+        currentIndex++;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        currentIndex--;
+        updateCarousel();
+    }
+
+    function stopAutoScroll() {
+        clearInterval(autoScroll);
+    }
+
+    function startAutoScroll() {
+        stopAutoScroll();
+
+        if (paused || window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches) return;
+
+        if (cards.length > getVisibleCount()) {
+            autoScroll = setInterval(nextSlide, 4000);
+        }
+    }
+
+    nextBtn.addEventListener("click", function () {
+        nextSlide();
+        startAutoScroll();
+    });
+
+    prevBtn.addEventListener("click", function () {
+        prevSlide();
+        startAutoScroll();
+    });
+
+    carousel.addEventListener("mouseenter", function () {
+        paused = true;
+        stopAutoScroll();
+    });
+
+    carousel.addEventListener("mouseleave", function () {
+        paused = false;
+        startAutoScroll();
+    });
+
+    carousel.addEventListener("focusin", function () {
+        paused = true;
+        stopAutoScroll();
+    });
+
+    carousel.addEventListener("focusout", function (event) {
+        if (!carousel.contains(event.relatedTarget)) {
+            paused = false;
+            startAutoScroll();
+        }
+    });
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            stopAutoScroll();
+        } else {
+            startAutoScroll();
+        }
+    });
+
+    window.addEventListener("resize", function () {
+        currentIndex = Math.min(currentIndex, getMaxIndex());
+        updateCarousel();
+        startAutoScroll();
+    });
+
+    updateCarousel();
+    startAutoScroll();
+});
+
+
 // Business card carousel
 const businessesTrack = document.getElementById("businessesTrack");
 const businessesPrev = document.getElementById("businessesPrev");
@@ -246,7 +365,6 @@ innovationTabs.forEach((tab, index) => {
 
 
 // BRAND PORTFOLIO
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const track = document.querySelector(".brand-track");
@@ -764,4 +882,489 @@ document.addEventListener("DOMContentLoaded", () => {
     }, true);
 
     updateButtons();
+});
+
+// about us
+
+document.addEventListener("DOMContentLoaded", () => {
+    const track = document.querySelector(".business-track");
+    const viewport = document.querySelector(".business-viewport");
+    const prevButton = document.querySelector(".business-prev");
+    const nextButton = document.querySelector(".business-next");
+
+    if (!track || !viewport || !prevButton || !nextButton) return;
+
+    const originalCards = Array.from(track.querySelectorAll(".business-card"));
+    if (originalCards.length <= 1) return;
+
+    // Clone cards for seamless looping
+    originalCards.forEach(card => {
+        track.appendChild(card.cloneNode(true));
+    });
+
+    let index = 0;
+    let timer;
+    let isHovered = false;
+
+    function getGap() {
+        return parseFloat(getComputedStyle(track).gap) || 0;
+    }
+
+    function getStep() {
+        const card = track.querySelector(".business-card");
+        return card.getBoundingClientRect().width + getGap();
+    }
+
+    function getVisibleCards() {
+        return Math.max(1, Math.round(viewport.clientWidth / getStep()));
+    }
+
+    function updateCarousel(animate = true) {
+        track.style.transition = animate ? "transform 0.45s ease" : "none";
+        track.style.transform = `translateX(-${index * getStep()}px)`;
+    }
+
+    function nextSlide() {
+        index++;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        if (index === 0) {
+            index = originalCards.length;
+            updateCarousel(false);
+            track.offsetHeight;
+        }
+
+        index--;
+        updateCarousel();
+    }
+
+    track.addEventListener("transitionend", () => {
+        if (index >= originalCards.length) {
+            index = 0;
+            updateCarousel(false);
+        }
+    });
+
+    function startAutoScroll() {
+        clearInterval(timer);
+
+        if (isHovered) return;
+
+        timer = setInterval(nextSlide, 4000);
+    }
+
+    nextButton.addEventListener("click", () => {
+        nextSlide();
+        startAutoScroll();
+    });
+
+    prevButton.addEventListener("click", () => {
+        prevSlide();
+        startAutoScroll();
+    });
+
+    viewport.addEventListener("mouseenter", () => {
+        isHovered = true;
+        clearInterval(timer);
+    });
+
+    viewport.addEventListener("mouseleave", () => {
+        isHovered = false;
+        startAutoScroll();
+    });
+
+    viewport.addEventListener("focusin", () => {
+        isHovered = true;
+        clearInterval(timer);
+    });
+
+    viewport.addEventListener("focusout", event => {
+        if (!viewport.contains(event.relatedTarget)) {
+            isHovered = false;
+            startAutoScroll();
+        }
+    });
+
+    window.addEventListener("resize", () => updateCarousel(false));
+
+    updateCarousel(false);
+    startAutoScroll();
+});
+
+
+// about us page - global 
+const globalLogos = document.getElementById("globalLogos");
+const globalLogoPrev = document.getElementById("globalLogoPrev");
+const globalLogoNext = document.getElementById("globalLogoNext");
+
+if (globalLogos && globalLogoPrev && globalLogoNext) {
+    let currentIndex = 0;
+
+    function getLogoMetrics() {
+        const cards = globalLogos.querySelectorAll(".global-logo-card");
+        const visibleWidth = globalLogos.parentElement.clientWidth;
+
+        if (!cards.length) {
+            return { cards, maxIndex: 0, step: 0 };
+        }
+
+        const style = getComputedStyle(globalLogos);
+        const gap = parseFloat(style.gap) || 0;
+        const step = cards[0].getBoundingClientRect().width + gap;
+        const maxIndex = Math.max(
+            0,
+            Math.ceil((globalLogos.scrollWidth - visibleWidth) / step)
+        );
+
+        return { cards, maxIndex, step };
+    }
+
+    function updateLogoCarousel() {
+        const { maxIndex, step } = getLogoMetrics();
+
+        currentIndex = Math.min(currentIndex, maxIndex);
+
+        globalLogos.style.transform =
+            `translateX(-${currentIndex * step}px)`;
+
+        globalLogoPrev.disabled = currentIndex === 0;
+        globalLogoNext.disabled = currentIndex >= maxIndex;
+
+        globalLogoPrev.style.opacity =
+            currentIndex === 0 ? "0.35" : "1";
+
+        globalLogoNext.style.opacity =
+            currentIndex >= maxIndex ? "0.35" : "1";
+    }
+
+    globalLogoNext.addEventListener("click", () => {
+        const { maxIndex } = getLogoMetrics();
+
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+            updateLogoCarousel();
+        }
+    });
+
+    globalLogoPrev.addEventListener("click", () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateLogoCarousel();
+        }
+    });
+
+    window.addEventListener("resize", updateLogoCarousel);
+
+    updateLogoCarousel();
+}
+
+// About us - Awards
+document.addEventListener("DOMContentLoaded", function () {
+    const grid = document.querySelector(".awards-grid");
+    const prev = document.querySelector(".awards-prev");
+    const next = document.querySelector(".awards-next");
+
+    if (!grid || !prev || !next) return;
+
+    function getScrollAmount() {
+        const card = grid.querySelector(".award-card");
+        if (!card) return 0;
+
+        const gap = parseFloat(getComputedStyle(grid).gap) || 0;
+        return card.getBoundingClientRect().width + gap;
+    }
+
+    prev.addEventListener("click", function () {
+        grid.scrollBy({
+            left: -getScrollAmount(),
+            behavior: "smooth"
+        });
+    });
+
+    next.addEventListener("click", function () {
+        grid.scrollBy({
+            left: getScrollAmount(),
+            behavior: "smooth"
+        });
+    });
+});
+
+// About page - Team section
+
+document.addEventListener("DOMContentLoaded", function () {
+    const track = document.querySelector(".team-track");
+    const viewport = document.querySelector(".team-viewport");
+    const prevBtn = document.querySelector(".team-prev");
+    const nextBtn = document.querySelector(".team-next");
+
+    const modal = document.getElementById("teamModal");
+    const modalName = document.getElementById("teamModalName");
+    const modalRole = document.getElementById("teamModalRole");
+    const modalBio = document.getElementById("teamModalBio");
+
+    if (!track || !viewport || !prevBtn || !nextBtn || !modal) return;
+
+    // Keep your existing teamMembers array here.
+    const teamMembers = [
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul>
+            <li>details</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet 
+            consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur 
+            adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor 
+            sit amet consectetur adipisicing elit. </br>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </li>
+            </ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul><li>details</li><li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li></ul>`
+        },
+        {
+            name: "Name",
+            role: "role",
+            bio: `<ul>
+            <li>details</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet 
+            consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur 
+            adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor 
+            sit amet consectetur adipisicing elit </br>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </li>
+            </ul>`
+        }
+    ];
+
+    let activeIndex = 0;
+
+    function getCards() {
+        return Array.from(track.querySelectorAll(".team-card"));
+    }
+
+    function getStep() {
+        const card = getCards()[0];
+        if (!card) return 0;
+
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        return card.getBoundingClientRect().width + gap;
+    }
+
+    function getMaxIndex() {
+        const cards = getCards();
+        const step = getStep();
+
+        if (!cards.length || !step) return 0;
+
+        const visibleCards = Math.max(
+            1,
+            Math.floor((viewport.clientWidth + 1) / step)
+        );
+
+        return Math.max(0, cards.length - visibleCards);
+    }
+
+    function updateCarousel() {
+        const cards = getCards();
+        if (!cards.length) return;
+
+        activeIndex = (activeIndex + cards.length) % cards.length;
+
+        cards.forEach((card, index) => {
+            card.classList.toggle("active", index === activeIndex);
+
+            if (index === activeIndex) {
+                card.setAttribute("aria-current", "true");
+            } else {
+                card.removeAttribute("aria-current");
+            }
+        });
+
+        const step = getStep();
+        const maxIndex = getMaxIndex();
+
+        // Scroll one card at a time while keeping the active card visible.
+        let position = Math.min(activeIndex, maxIndex);
+
+        // Wrap the visual position back to the beginning after the last card.
+        if (activeIndex === 0) {
+            position = 0;
+        }
+
+        track.style.transform = `translateX(-${position * step}px)`;
+    }
+
+    nextBtn.addEventListener("click", function () {
+        activeIndex++;
+        updateCarousel();
+    });
+
+    prevBtn.addEventListener("click", function () {
+        activeIndex--;
+        updateCarousel();
+    });
+
+    // Clicking a card makes it active.
+    track.addEventListener("click", function (event) {
+        if (event.target.closest(".team-details-btn")) return;
+
+        const card = event.target.closest(".team-card");
+        if (!card) return;
+
+        activeIndex = getCards().indexOf(card);
+        updateCarousel();
+    });
+
+    // Open member details popup.
+    track.addEventListener("click", function (event) {
+        const button = event.target.closest(".team-details-btn");
+        if (!button) return;
+
+        event.stopPropagation();
+
+        const member = teamMembers[Number(button.dataset.member)];
+        if (!member) return;
+
+        modalName.textContent = member.name;
+        modalRole.textContent = member.role;
+        modalBio.innerHTML = member.bio;
+
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    });
+
+    function closeModal() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    }
+
+    modal.querySelectorAll("[data-close-modal]").forEach(function (element) {
+        element.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeModal();
+        }
+    });
+
+    window.addEventListener("resize", updateCarousel);
+
+    updateCarousel();
+});
+
+
+// capabilities- products section 
+const productData = {
+    bedding: {
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Sed do eiusmod tempor incididunt ut labore et dolore magna " +
+            "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+            "ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        image: "assets/images/banner-1.jpg",
+        alt: "Bedding Solutions",
+        link: "#bedding-solutions"
+    },
+
+    bath: {
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Explore our collection of comfortable and luxurious bath " +
+            "textiles, thoughtfully designed to bring softness, style, " +
+            "and everyday comfort into your home.",
+        image: "assets/images/banner-2.jpg",
+        alt: "Bath Solutions",
+        link: "#bath-solutions"
+    },
+
+    flooring: {
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Discover versatile flooring solutions that combine style, " +
+            "durability, and functionality. Our thoughtfully designed " +
+            "products bring a refined look to a variety of spaces.",
+        image: "assets/images/banner-3.jpg",
+        alt: "Flooring Solutions",
+        link: "#flooring-solutions"
+    }
+};
+
+const productTabs = document.querySelectorAll(".product-tab");
+const productDescription = document.getElementById("product-description");
+const productImage = document.getElementById("product-image");
+const productLink = document.getElementById("product-link");
+
+productTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+        const selectedProduct = tab.dataset.product;
+        const product = productData[selectedProduct];
+
+        if (!product) return;
+
+        // Update active card
+        productTabs.forEach((item) => {
+            item.classList.remove("active");
+            item.setAttribute("aria-pressed", "false");
+        });
+
+        tab.classList.add("active");
+        tab.setAttribute("aria-pressed", "true");
+
+        // Update description
+        productDescription.textContent = product.description;
+
+        // Update image
+        productImage.src = product.image;
+        productImage.alt = product.alt;
+
+        // Update button destination
+        productLink.href = product.link;
+    });
+});
+
+// Set initial accessibility state
+productTabs.forEach((tab) => {
+    tab.setAttribute(
+        "aria-pressed",
+        tab.classList.contains("active") ? "true" : "false"
+    );
 });
