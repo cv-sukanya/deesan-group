@@ -130,6 +130,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// Navbar
+document.querySelectorAll(".mobile-dropdown-toggle").forEach(button => {
+    button.addEventListener("click", function () {
+
+        const dropdown = this.closest(".mobile-nav-dropdown");
+        const isOpen = dropdown.classList.toggle("open");
+
+        this.setAttribute("aria-expanded", isOpen);
+
+    });
+});
 
 // Homepage - Company stats
 
@@ -1367,4 +1378,269 @@ productTabs.forEach((tab) => {
         "aria-pressed",
         tab.classList.contains("active") ? "true" : "false"
     );
+});
+
+
+// Our innovation 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slides = document.querySelectorAll(".innovation-slide");
+    const prevBtn = document.querySelector(".innovation-prev");
+    const nextBtn = document.querySelector(".innovation-next");
+
+    if (!slides.length || !prevBtn || !nextBtn) return;
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === index);
+
+            // Reset description scroll when changing slides
+            const description = slide.querySelector(
+                ".innovation-info-description"
+            );
+
+            if (description) {
+                description.scrollTop = 0;
+            }
+        });
+
+    }
+
+    nextBtn.addEventListener("click", function () {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    });
+
+    prevBtn.addEventListener("click", function () {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    });
+
+    showSlide(currentSlide);
+
+});
+
+
+// Brands page
+// brand video 2
+document.querySelectorAll(".brand2-video").forEach(videoBox => {
+
+    const playBtn = videoBox.querySelector(".brand2-play-btn");
+
+    playBtn.addEventListener("click", function () {
+
+        const videoId = videoBox.dataset.videoId;
+
+        const iframe = document.createElement("iframe");
+
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+        iframe.title = "Spaces Brand Video";
+        iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+
+        videoBox.appendChild(iframe);
+        videoBox.classList.add("playing");
+
+    });
+
+});
+
+// NSS
+document.addEventListener("DOMContentLoaded", function () {
+
+    const section = document.querySelector(".esg-journey");
+    const path = document.querySelector(".esg-line-path");
+
+    if (!section || !path) return;
+
+    const pathLength = path.getTotalLength();
+
+    // Set initial line state
+    path.style.strokeDasharray = pathLength;
+    path.style.strokeDashoffset = pathLength;
+
+    function updateJourneyLine() {
+
+        const rect = section.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Calculate scroll progress through the section
+        const start = windowHeight * 0.65;
+        const end = rect.height - windowHeight * 0.35;
+
+        let progress = (start - rect.top) / (start + end);
+
+        progress = Math.max(0, Math.min(1, progress));
+
+        path.style.strokeDashoffset =
+            pathLength * (1 - progress);
+    }
+
+    window.addEventListener("scroll", updateJourneyLine, {
+        passive: true
+    });
+
+    window.addEventListener("resize", updateJourneyLine);
+
+    updateJourneyLine();
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slides = document.querySelectorAll(".quote-slide");
+    const prevBtn = document.querySelector(".quote-prev");
+    const nextBtn = document.querySelector(".quote-next");
+
+    if (!slides.length || !prevBtn || !nextBtn) return;
+
+    let currentSlide = 0;
+    let autoSlide;
+
+    function showSlide(index) {
+
+        slides.forEach(slide => {
+            slide.classList.remove("active");
+        });
+
+        slides[index].classList.add("active");
+
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        let next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+
+    function prevSlide() {
+        let prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+    }
+
+    function startAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, 5000);
+    }
+
+    nextBtn.addEventListener("click", function () {
+        nextSlide();
+        startAutoSlide();
+    });
+
+    prevBtn.addEventListener("click", function () {
+        prevSlide();
+        startAutoSlide();
+    });
+
+    startAutoSlide();
+
+});
+
+
+// Investors slider
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slider = document.querySelector(".investor-slider");
+    const wrapper = document.querySelector(".investor-slider-wrapper");
+    const nextBtn = document.querySelector(".investor-next");
+    const prevBtn = document.querySelector(".investor-prev");
+
+    if (!slider || !wrapper) return;
+
+    const originalCards = [...slider.querySelectorAll(".investor-card")];
+    const totalCards = originalCards.length;
+
+    if (totalCards < 2) return;
+
+    // Clone original cards
+    originalCards.forEach(card => {
+        slider.appendChild(card.cloneNode(true));
+    });
+
+    let currentIndex = 0;
+    let autoSlide;
+    let isAnimating = false;
+
+    function moveSlider() {
+        const cards = slider.querySelectorAll(".investor-card");
+
+        slider.style.transform =
+            `translateX(-${cards[currentIndex].offsetLeft}px)`;
+
+        originalCards.forEach((card, index) => {
+            card.classList.toggle(
+                "active",
+                index === currentIndex % totalCards
+            );
+        });
+    }
+
+    function nextSlide() {
+        if (isAnimating) return;
+
+        isAnimating = true;
+        currentIndex++;
+        slider.style.transition = "transform 0.6s ease";
+        moveSlider();
+    }
+
+    function prevSlide() {
+        if (isAnimating) return;
+
+        if (currentIndex === 0) {
+            slider.style.transition = "none";
+            currentIndex = totalCards;
+            moveSlider();
+
+            slider.offsetHeight;
+        }
+
+        isAnimating = true;
+        currentIndex--;
+        slider.style.transition = "transform 0.6s ease";
+        moveSlider();
+    }
+
+    slider.addEventListener("transitionend", function (event) {
+
+        if (event.propertyName !== "transform") return;
+
+        if (currentIndex === totalCards) {
+            slider.style.transition = "none";
+            currentIndex = 0;
+            moveSlider();
+        }
+
+        isAnimating = false;
+    });
+
+    function startAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, 3000);
+    }
+
+    nextBtn?.addEventListener("click", () => {
+        nextSlide();
+        startAutoSlide();
+    });
+
+    prevBtn?.addEventListener("click", () => {
+        prevSlide();
+        startAutoSlide();
+    });
+
+    wrapper.addEventListener("mouseenter", () => clearInterval(autoSlide));
+    wrapper.addEventListener("mouseleave", startAutoSlide);
+
+    window.addEventListener("resize", moveSlider);
+
+    moveSlider();
+    startAutoSlide();
+
 });
