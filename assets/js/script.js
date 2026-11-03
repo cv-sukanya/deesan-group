@@ -1705,3 +1705,187 @@ document.addEventListener("DOMContentLoaded", function () {
     updateCards();
 
 });
+
+
+// People page - Make cards active on click
+document.addEventListener("DOMContentLoaded", function () {
+
+    const initiativeCards = document.querySelectorAll(
+        ".initiative-card"
+    );
+
+    const detailsHeading = document.querySelector(
+        ".initiative-details-heading"
+    );
+
+    const detailsSubtitle = document.querySelector(
+        ".initiative-details-subtitle"
+    );
+
+    const detailsDescription = document.querySelector(
+        ".initiative-details-description"
+    );
+
+    const detailsIcon = document.querySelector(
+        ".initiative-details-icon"
+    );
+
+
+    /* =========================================
+       INITIATIVE CONTENT
+    ========================================= */
+
+    const initiativeContent = [
+
+        {
+            title: "Employee Engagement",
+
+            subtitle: "Empowerment",
+
+            icon: "assets/images/employee-engagement.png",
+
+            description:
+                "We keep engaging our employees on a regular basis through interesting and much-needed initiatives. Our focus is on creating an inclusive and empowering workplace that encourages collaboration, employee well-being, and professional growth."
+        },
+
+        {
+            title: "Learning and Development",
+
+            subtitle: "Skill Enhancement",
+
+            icon: "assets/images/learning-development.png",
+
+            description:
+                "We are dedicatedly working towards enhancing our employees' skill sets for seamless digital transformation. Our association with world-class L&D programs allows our employees to select training programs of their choice."
+        },
+
+        {
+            title: "Digital Transformation",
+
+            subtitle: "Innovation",
+
+            icon: "assets/images/digital-transformation.png",
+
+            description:
+                "Digital transformation is surely going to be one of our prominent objectives. We continuously focus on adopting innovative technologies, improving operational efficiency, and empowering our employees with the digital skills required for the future."
+        }
+
+    ];
+
+
+    /* =========================================
+       UPDATE DESCRIPTION
+    ========================================= */
+
+    function updateInitiative(index) {
+
+        const content = initiativeContent[index];
+
+        if (!content) return;
+
+
+        // Update title
+        detailsHeading.textContent = content.title;
+
+
+        // Update subtitle
+        detailsSubtitle.textContent = content.subtitle;
+
+
+        // Update description
+        detailsDescription.textContent = content.description;
+
+
+        // Update PNG icon
+        detailsIcon.innerHTML = `
+            <img
+                src="${content.icon}"
+                alt=""
+                class="details-icon-img"
+            >
+        `;
+
+    }
+
+
+    /* =========================================
+       CARD CLICK FUNCTION
+    ========================================= */
+
+    function activateCard(index) {
+
+        // Remove active from all cards
+        initiativeCards.forEach(function (card) {
+
+            card.classList.remove("active");
+
+            card.setAttribute("aria-pressed", "false");
+
+        });
+
+
+        // Add active to selected card
+        initiativeCards[index].classList.add("active");
+
+        initiativeCards[index].setAttribute(
+            "aria-pressed",
+            "true"
+        );
+
+
+        // Update description section
+        updateInitiative(index);
+
+    }
+
+
+    /* =========================================
+       CLICK AND KEYBOARD EVENTS
+    ========================================= */
+
+    initiativeCards.forEach(function (card, index) {
+
+        card.addEventListener("click", function () {
+
+            activateCard(index);
+
+        });
+
+
+        // Keyboard accessibility
+        card.addEventListener("keydown", function (event) {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                activateCard(index);
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================================
+       INITIAL ACTIVE CARD
+    ========================================= */
+
+    const initialActiveIndex = Array.from(
+        initiativeCards
+    ).findIndex(function (card) {
+
+        return card.classList.contains("active");
+
+    });
+
+
+    activateCard(
+        initialActiveIndex >= 0 ? initialActiveIndex : 0
+    );
+
+});

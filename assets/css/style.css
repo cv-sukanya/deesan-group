@@ -42,7 +42,8 @@ img {
 .logo {
     position: absolute;
     top: 50%;
-    left: 3.5%;
+    /* left: 3.5%; */
+    left: 8.5%;
     z-index: 10;
     display: flex;
     align-items: center;
@@ -53,7 +54,7 @@ img {
 .logo img {
     display: block;
     width: auto;
-    height: 72px;
+    height: 80px;
     max-width: 180px;
     object-fit: contain;
 }
@@ -63,13 +64,14 @@ img {
     width: calc(100% - 400px);
     max-width: 1000px;
     height: 100%;
-    margin: 0 auto;
+    /* margin: 0 auto; old*/
+    margin: 0 30%;
 }
 
 .top-links {
     position: absolute;
     top: 22px;
-    right: 120px;
+    right: 180px;
     display: flex;
     gap: 18px;
 }
@@ -2434,7 +2436,7 @@ img {
         gap: 24px;
 
         width: 100%;
-        margin-top: 0;
+        margin-top: 10px;
         padding: 22px 2px 8px;
 
         overflow-x: auto;
@@ -8682,7 +8684,7 @@ img {
     overflow: hidden;
 }
 
-.innovations-heading {
+.innovations-headings {
     text-align: center;
     margin-bottom: 55px;
 }
@@ -8691,18 +8693,18 @@ img {
     display: block;
     width: 55px;
     height: 4px;
-    background: var(--primary);
-    margin: 0 auto 12px;
+    /* background: var(--primary); */
+    /* margin: 0 auto 12px; */
 }
 
-.innovations-heading h2 {
+.innovations-headings h2 {
     margin: 0;
     font-size: clamp(36px, 4vw, 68px);
     font-weight: 700;
     color: #000;
 }
 
-.innovations-heading h2 span {
+.innovations-headings h2 span {
     color: var(--primary);
 }
 
@@ -8950,12 +8952,12 @@ img {
         padding: 25px 0 90px;
     }
 
-    .innovations-heading {
+    .innovations-headings {
         margin-bottom: 30px;
         padding: 0 15px;
     }
 
-    .innovations-heading h2 {
+    .innovations-headings h2 {
         font-size: 36px;
     }
 
@@ -11509,4 +11511,877 @@ img {
     .media-load-more-wrap {
         margin-top: 35px;
     }
+}
+
+/* ================= THE DEESAN WAY ================= */
+
+.deesan-way {
+    width: 100%;
+    padding: 80px 20px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.deesan-way-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Main grid */
+
+.deesan-way-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 35px;
+    align-items: stretch;
+}
+
+/* Left content */
+
+.deesan-way-left {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.deesan-way-heading {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.deesan-way-line {
+    display: block;
+    width: 55px;
+    height: 5px;
+    background: #f5b94c;
+    margin-bottom: 12px;
+}
+
+.deesan-way-heading h2 {
+    margin: 0;
+    font-size: clamp(38px, 4.5vw, 53px);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #000;
+}
+
+.deesan-way-heading h2 span {
+    color: #302d83;
+}
+
+.deesan-way-intro p {
+    margin: 0 0 28px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #111;
+}
+
+/* Image collage */
+
+.deesan-way-collage {
+    display: grid;
+    grid-template-columns: 1.7fr 0.8fr;
+    align-items: end;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.deesan-way-collage-main {
+    width: 100%;
+    height: 330px;
+}
+
+.deesan-way-collage-small {
+    width: 100%;
+    height: 260px;
+}
+
+.deesan-way-collage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right large image */
+
+.deesan-way-right {
+    width: 100%;
+    height: 680px;
+    min-width: 0;
+}
+
+.deesan-way-right img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Bottom text */
+
+.deesan-way-bottom {
+    margin-top: 35px;
+}
+
+.deesan-way-bottom p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #111;
+}
+
+
+/* ================= TABLET ================= */
+
+@media (max-width: 991px) {
+
+    .deesan-way {
+        padding: 60px 25px;
+    }
+
+    .deesan-way-grid {
+        grid-template-columns: 1fr 0.8fr;
+        gap: 25px;
+    }
+
+    .deesan-way-heading h2 {
+        font-size: 42px;
+    }
+
+    .deesan-way-intro p {
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .deesan-way-collage-main {
+        height: 240px;
+    }
+
+    .deesan-way-collage-small {
+        height: 190px;
+    }
+
+    .deesan-way-right {
+        height: 560px;
+    }
+
+    .deesan-way-bottom p {
+        font-size: 16px;
+    }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 575px) {
+
+    .deesan-way {
+        padding: 45px 18px;
+    }
+
+    .deesan-way-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .deesan-way-heading {
+        margin-bottom: 20px;
+    }
+
+    .deesan-way-heading h2 {
+        font-size: 38px;
+    }
+
+    .deesan-way-intro p {
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 18px;
+    }
+
+    /* Collage */
+
+    .deesan-way-collage {
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 10px;
+        padding-top: 5px;
+    }
+
+    .deesan-way-collage-main {
+        height: 220px;
+    }
+
+    .deesan-way-collage-small {
+        height: 160px;
+    }
+
+    /* Large image moves below collage */
+
+    .deesan-way-right {
+        height: 420px;
+    }
+
+    .deesan-way-right img {
+        object-position: center top;
+    }
+
+    .deesan-way-bottom {
+        margin-top: 25px;
+    }
+
+    .deesan-way-bottom p {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 380px) {
+
+    .deesan-way-heading h2 {
+        font-size: 32px;
+    }
+
+    .deesan-way-collage-main {
+        height: 180px;
+    }
+
+    .deesan-way-collage-small {
+        height: 140px;
+    }
+
+    .deesan-way-right {
+        height: 350px;
+    }
+}
+
+/* ================= OUR INITIATIVES ================= */
+/* =========================================
+   INITIATIVES SECTION
+========================================= */
+
+.initiatives-section {
+    width: 100%;
+    padding: 53px 30px 0;
+
+    background-color: #ffffff;
+
+    box-sizing: border-box;
+}
+
+.initiatives-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 36px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================
+   INITIATIVE CARDS
+========================================= */
+
+.initiative-card {
+    position: relative;
+
+    width: 100%;
+    min-height: 346px;
+
+    padding: 29px 30px 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e7e7e7;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition:
+        background-color 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+/* =========================================
+   ACTIVE CARD
+========================================= */
+
+.initiative-card.active {
+    border-color: transparent;
+
+    box-shadow:
+        0 0 45px rgba(0, 0, 0, 0.09);
+}
+
+
+/* Active Card Bottom Triangle */
+
+.initiative-card.active::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -24px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 0;
+    height: 0;
+
+    border-left: 24px solid transparent;
+    border-right: 24px solid transparent;
+
+    border-top: 24px solid #ffffff;
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   CARD ICON
+========================================= */
+
+.initiative-icon {
+    width: 90px;
+    height: 90px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    transition: all 0.35s ease;
+}
+
+
+/* PNG Icon */
+
+.initiative-img {
+    width: 64px;
+    height: 64px;
+
+    object-fit: contain;
+
+    display: block;
+
+    opacity: 0.65;
+
+    transition:
+        filter 0.35s ease,
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+/* Active Icon Circle */
+
+.initiative-card.active .initiative-icon {
+    width: 116px;
+    height: 116px;
+
+    margin-bottom: 20px;
+
+    background-color: #292783;
+
+    border-radius: 50%;
+}
+
+
+/* White PNG Icon Inside Blue Circle */
+
+.initiative-card.active .initiative-img {
+    width: 64px;
+    height: 64px;
+
+    opacity: 1;
+
+    filter: brightness(0) invert(1);
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.initiative-content {
+    width: 100%;
+}
+
+.initiative-content p {
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    color: #151515;
+
+    text-align: center;
+
+    overflow-wrap: break-word;
+}
+
+
+/* =========================================
+   CARD HOVER
+========================================= */
+
+.initiative-card:hover {
+    background-color: #f9f9ff;
+
+    border-color: #292783;
+
+    box-shadow:
+        0 10px 35px rgba(41, 39, 131, 0.10);
+
+    transform: translateY(-5px);
+}
+
+
+/* =========================================
+   DESCRIPTION SECTION
+========================================= */
+
+.initiative-details {
+    width: 100%;
+
+    margin-top: 88px;
+
+    padding: 62px 65px 70px;
+
+    background-color: #f3f3f3;
+
+    box-sizing: border-box;
+}
+
+
+.initiative-details-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 50px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   DESCRIPTION LEFT SIDE
+========================================= */
+
+.initiative-details-left {
+    width: 100%;
+}
+
+
+/* Title Card */
+
+.initiative-details-title {
+    position: relative;
+
+    width: 100%;
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 10px 25px 10px 50px;
+
+    background-color: #ffffff;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.08);
+
+    box-sizing: border-box;
+}
+
+
+/* Description Icon Circle */
+
+.initiative-details-icon {
+    position: absolute;
+
+    left: -25px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #292783;
+
+    border-radius: 50%;
+}
+
+
+/* Description PNG */
+
+.details-icon-img {
+    width: 32px;
+    height: 32px;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter: brightness(0) invert(1);
+}
+
+
+/* Description Title */
+
+.initiative-details-heading {
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 25px;
+    font-weight: 400;
+
+    line-height: 1.4;
+
+    color: #34328e;
+}
+
+
+/* Horizontal Line */
+
+.initiative-details-line {
+    position: absolute;
+
+    left: calc(100% - 75px);
+
+    width: 155px;
+    height: 1px;
+
+    background-color: #34328e;
+}
+
+
+/* Subtitle */
+
+.initiative-details-subtitle {
+    margin-top: 22px;
+
+    padding-left: 50px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 25px;
+    font-weight: 400;
+
+    line-height: 1.4;
+
+    color: #414141;
+}
+
+
+/* =========================================
+   DESCRIPTION RIGHT SIDE
+========================================= */
+
+.initiative-details-right {
+    width: 100%;
+}
+
+.initiative-details-description {
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    color: #222222;
+}
+
+
+/* =========================================
+   DESCRIPTION TRANSITION
+========================================= */
+
+.initiative-details-heading,
+.initiative-details-subtitle,
+.initiative-details-description {
+    transition: opacity 0.25s ease;
+}
+
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+
+    .initiatives-section {
+        padding: 45px 25px 0;
+    }
+
+    .initiatives-container {
+        gap: 24px;
+    }
+
+    .initiative-card {
+        min-height: 350px;
+
+        padding: 25px 20px;
+    }
+
+    .initiative-content p {
+        font-size: 17px;
+
+        line-height: 1.6;
+    }
+
+    .initiative-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .initiative-img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .initiative-card.active .initiative-icon {
+        width: 100px;
+        height: 100px;
+    }
+
+    .initiative-card.active .initiative-img {
+        width: 58px;
+        height: 58px;
+    }
+
+
+    /* Description */
+
+    .initiative-details {
+        margin-top: 70px;
+
+        padding: 50px 40px;
+    }
+
+    .initiative-details-container {
+        gap: 35px;
+    }
+
+    .initiative-details-heading {
+        font-size: 21px;
+    }
+
+    .initiative-details-subtitle {
+        font-size: 22px;
+    }
+
+    .initiative-details-line {
+        width: 80px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+
+    .initiatives-section {
+        padding: 35px 20px 0;
+    }
+
+    .initiatives-container {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        max-width: 500px;
+    }
+
+    .initiative-card {
+        min-height: auto;
+
+        padding: 30px 25px;
+    }
+
+    .initiative-card.active {
+        box-shadow:
+            0 0 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .initiative-card.active::after {
+        display: none;
+    }
+
+    .initiative-icon {
+        width: 80px;
+        height: 80px;
+
+        margin-bottom: 18px;
+    }
+
+    .initiative-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .initiative-card.active .initiative-icon {
+        width: 100px;
+        height: 100px;
+
+        margin-bottom: 20px;
+    }
+
+    .initiative-card.active .initiative-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .initiative-content p {
+        font-size: 17px;
+
+        line-height: 1.6;
+    }
+
+
+    /* Description */
+
+    .initiative-details {
+        margin-top: 50px;
+
+        padding: 40px 25px;
+    }
+
+    .initiative-details-container {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    .initiative-details-title {
+        min-height: 65px;
+
+        padding-left: 40px;
+        padding-right: 15px;
+    }
+
+    .initiative-details-icon {
+        width: 45px;
+        height: 45px;
+
+        left: -15px;
+    }
+
+    .details-icon-img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .initiative-details-heading {
+        font-size: 19px;
+    }
+
+    .initiative-details-line {
+        display: none;
+    }
+
+    .initiative-details-subtitle {
+        padding-left: 40px;
+
+        margin-top: 18px;
+
+        font-size: 20px;
+    }
+
+    .initiative-details-description {
+        font-size: 16px;
+
+        line-height: 1.7;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .initiatives-section {
+        padding: 30px 15px 0;
+    }
+
+    .initiatives-container {
+        gap: 20px;
+    }
+
+    .initiative-card {
+        padding: 25px 20px;
+    }
+
+    .initiative-content p {
+        font-size: 16px;
+
+        line-height: 1.6;
+    }
+
+    .initiative-details {
+        padding: 35px 20px;
+    }
+
+    .initiative-details-heading {
+        font-size: 17px;
+    }
+
+    .initiative-details-subtitle {
+        font-size: 18px;
+    }
+
+    .initiative-details-description {
+        font-size: 15px;
+    }
+
 }
